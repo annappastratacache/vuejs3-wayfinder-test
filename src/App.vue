@@ -9,7 +9,7 @@
   
 <svg version="1.1" id="Floor-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1920 1080" style="enable-background:new 0 0 1920 1080;" xml:space="preserve" preserveAspectRatio="xMidYMid meet">
 <Map></Map>
-<polyline class="path" v-bind:points="polyDraw"
+<polyline class="path" v-if="drowLine" v-bind:points="polyDraw"
   style="fill:none;stroke:red;stroke-width:4" />
 </svg>
 
@@ -20,6 +20,9 @@
   </button>
   <button class="m-2 btn btn-primary"   v-on:click="drawDesignPath">
       Design Lab
+  </button>
+  <button class="m-2 btn btn-primary"   v-on:click="removePath">
+      Remove Path
   </button>
 </div>
   <!-- 
@@ -39,7 +42,8 @@ export default {
       lineFill: 'blue',
       polyDraw: "",
 			designLabPath: "400,714 630,714  630,569  665,569  665,360",
-			engPath: "400,714 1400,714"
+			engPath: "400,714 1400,714",
+      drowLine: false
     }
   },
   components: {
@@ -58,14 +62,19 @@ export default {
 	methods: {
 		drawEngPath: function(event){
 			if (event) {
-        this.polyDraw = this.engPath; 
+        this.polyDraw = this.engPath;
+        this.drowLine = true 
       }
 		},
 		drawDesignPath: function(event){
 			if (event) {
-        this.polyDraw = this.designLabPath; 
+        this.polyDraw = this.designLabPath;
+        this.drowLine = true 
       }
-		}
+		},
+    removePath() {
+      this.drowLine = false 
+    }
 	},
 
   
@@ -84,8 +93,9 @@ export default {
 
 .path {
   stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: dash 10s linear infinite;
+  /* stroke-dashoffset: 1000; */
+  animation: dash 3s linear infinite;
+  animation-iteration-count: 1
 }
 
 @keyframes dash {
